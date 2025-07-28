@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 
 function Sidebar() {
   return (
-    <div className='bg-white w-full h-full p-4'>
+    <div className='bg-white mt-1 w-full h-full p-4'>
       <div className="flex flex-col space-y-4">
         <NavLink
           to="/"

@@ -19,7 +19,7 @@ function Navbar() {
   return (
     <nav className="bg-white flex justify-between items-center w-full h-16 border border-gray-300 shadow-md px-4">
       <div className="flex items-center gap-4">
-        <img src="./images/iconolegal.png" height="130" width="130" alt="Icono Legal" className="hover:cursor-pointer" />
+        <img src="./images/iconolegal.png" alt="Icono Legal" className="max-w-auto h-14 hover:cursor-pointer" />
         <a href="/" className="text-xl font-semibold">Estudio Legal</a>
       </div>
 
