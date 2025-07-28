@@ -15,7 +15,7 @@ const GraficoEspacio = () => {
         max={espacioTotal}
         className="w-full h-6"
       ></meter>
-      <p className="mt-2 text-sm text-gray-600">{`${(porcentaje.toFixed(1)/1024)*100}% (${espacioUtilizado} MB de ${espacioTotal} GB)`}</p>
+      <p className="mt-2 text-sm text-gray-600">{`${Math.round((porcentaje.toFixed(1)/1024)*100)}% (${espacioUtilizado} MB de ${espacioTotal} GB)`}</p>
     </div>
   );
 };

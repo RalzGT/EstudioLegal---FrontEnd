@@ -16,7 +16,7 @@ function Dashboard() {
             <div className='flex items-center justify-center row-span-2 col-start-5 bg-white rounded shadow-lg h-full w-full'>
                 <div className='flex text-center items-center justify-center'><GraficoEspacio /></div>
             </div>
-            <div className='flex items-center justify-center row-span-2 col-start-5 row-start-3 bg-white rounded shadow-lg h-full w-full'>
+            <div onClick="" className='flex items-center justify-center row-span-2 col-start-5 row-start-3 hover:bg-blue-200 hover:scale-110 hover:shadow-xl hover:border hover:border-white hover:cursor-pointer bg-white rounded shadow-lg h-full w-full'>
                 Ultimo Documento
             </div>
             <div className='flex flex-col items-center justify-center row-span-2 col-start-5 row-start-5 bg-white rounded shadow-lg h-full w-full'>

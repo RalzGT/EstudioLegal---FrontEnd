@@ -17,31 +17,33 @@ function Navbar() {
   }, []);
 
   return (
-    <nav className="bg-white flex justify-between items-center w-full h-15 border border-gray-300 shadow-md">
-      <a href="/" className="text-xl">Estudio Legal</a>
+    <nav className="bg-white flex justify-between items-center w-full h-16 border border-gray-300 shadow-md px-4">
+      <div className="flex items-center gap-4">
+        <img src="./images/iconolegal.png" height="130" width="130" alt="Icono Legal" className="hover:cursor-pointer" />
+        <a href="/" className="text-xl font-semibold">Estudio Legal</a>
+      </div>
 
-      <div className="relative" ref={dropdownRef}>
-        <a
-          href="#"
+      <div className="flex items-center gap-2 relative" ref={dropdownRef}>
+        <button
           onClick={(e) => {
             e.preventDefault();
             setDropdownOpen(!dropdownOpen);
           }}
-          className="px-4 py-2 text-gray-700 hover:text-blue-500 cursor-pointer"
+          className="px-4 py-2 text-gray-700 hover:cursor-pointer hover:text-blue-500"
         >
-          Abogado Tal ▼
-        </a>
+          <img src="./images/pfp.jpg" height="50" width="50" alt="pfp" className="rounded-full" />
+        </button>
+        
 
         {dropdownOpen && (
-          <div className="absolute right-0 mt-2 w-48 bg-white border rounded shadow-lg z-50">
+          <div className="absolute right-0 top-full mt-2 w-48 bg-white border rounded shadow-lg z-50">
             <a
-              href="/perfil"
               className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
             >
-              Perfil
+              abogato12@gmail.com
             </a>
             <a
-              href="/cerrar-sesion"
+              href="/"
               className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
             >
               Cerrar sesión

@@ -9,12 +9,8 @@ function Sidebar() {
         Dashboard
       </Link>
 
-      <Link to="/documentos" className='block py-4 hover:cursor-pointer hover:bg-blue-400 hover:text-white rounded-xl px-2'>
-        Documentos
-      </Link>
-
       <Link to="/carpetas" className='block py-4 hover:cursor-pointer hover:bg-blue-400 hover:text-white rounded-xl px-2'>
-        Carpetas
+        Ver Carpetas
       </Link>
     </div>
   )
