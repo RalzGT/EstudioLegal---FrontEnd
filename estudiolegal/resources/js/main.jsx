@@ -12,25 +12,23 @@ import Login from "./components/login";
 
 function Main() {
   return (
-      <Login />
-
-    // <BrowserRouter>
-    //   <div className="bg-gray-300 w-full min-h-screen grid grid-cols-5 grid-rows-[auto_1fr]">
-    //     <div className="col-span-5 h-[60px] border-b border-gray-300 shadow-md">
-    //       <Navbar />
-    //     </div>
-    //     <div className="row-span-1 row-start-2">
-    //       <Sidebar />
-    //     </div>
-    //     <div className="col-span-4 row-span-1 row-start-2 p-4 overflow-y-auto max-h-[calc(100vh-60px)]">
-    //       <Routes>
-    //         <Route path="/" element={<Dashboard />} />
-    //         <Route path="/documentos" element={<Documentos />} />
-    //         <Route path="/carpetas" element={<Carpetas />} />
-    //       </Routes>
-    //     </div>
-    //   </div>
-    // </BrowserRouter>
+    <BrowserRouter>
+      <div className="bg-gray-300 w-full min-h-screen grid grid-cols-5 grid-rows-[auto_1fr]">
+        <div className="col-span-5 h-[60px] border-b border-gray-300 shadow-md">
+          <Navbar />
+        </div>
+        <div className="row-span-1 row-start-2">
+          <Sidebar />
+        </div>
+        <div className="col-span-4 row-span-1 row-start-2 p-4 overflow-y-auto max-h-[calc(100vh-60px)]">
+          <Routes>
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/documentos" element={<Documentos />} />
+            <Route path="/carpetas" element={<Carpetas />} />
+          </Routes>
+        </div>
+      </div>
+    </BrowserRouter>
   );
 }
 

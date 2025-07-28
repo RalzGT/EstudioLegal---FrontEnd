@@ -1,19 +1,33 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom';
 
 function Sidebar() {
   return (
     <div className='bg-white w-full h-full p-4'>
-      <Link to="/" className='block py-4 hover:cursor-pointer hover:bg-blue-400 hover:text-white rounded-xl px-2'>
-        Dashboard
-      </Link>
+      <div className="flex flex-col space-y-4">
+        <NavLink
+          to="/"
+          end
+          className={({ isActive }) =>
+            `block py-4 rounded-xl px-2 hover:cursor-pointer ${isActive ? 'bg-blue-400 text-white' : 'hover:bg-blue-300 hover:text-white'
+            }`
+          }
+        >
+          Dashboard
+        </NavLink>
 
-      <Link to="/carpetas" className='block py-4 hover:cursor-pointer hover:bg-blue-400 hover:text-white rounded-xl px-2'>
-        Ver Carpetas
-      </Link>
+        <NavLink
+          to="/carpetas"
+          className={({ isActive }) =>
+            `block py-4 rounded-xl px-2 hover:cursor-pointer ${isActive ? 'bg-blue-400 text-white' : 'hover:bg-blue-300 hover:text-white'
+            }`
+          }
+        >
+          Ver Carpetas
+        </NavLink>
+      </div>
     </div>
-  )
+  );
 }
 
 export default Sidebar;
