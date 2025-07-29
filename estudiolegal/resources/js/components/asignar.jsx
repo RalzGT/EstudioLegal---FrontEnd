@@ -40,7 +40,7 @@ function Asignar() {
 
           <button
             type="submit"
-            className="mt-4 bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition"
+            className="mt-4 bg-blue-600 text-white py-2 px-4 rounded hover:cursor-pointer hover:bg-blue-700 transition"
           >
             Asignar
           </button>

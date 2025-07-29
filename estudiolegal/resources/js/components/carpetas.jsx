@@ -45,10 +45,11 @@ const Folder = ({ folder, path, onSelect, selectedPath, onFolderContextMenu }) =
 const FileTable = ({ files, onFileContextMenu }) => {
   return (
     <div className="overflow-y-auto w-full max-h-[80vh]">
-      <div className="grid grid-cols-5 gap-4 text-sm text-gray-400 font-semibold border-b py-2 px-2">
+      <div className="grid grid-cols-6 gap-4 text-sm text-gray-400 font-semibold border-b py-2 px-2">
         <div>Nombre</div>
         <div>Propietario</div>
         <div>Fecha</div>
+        <div>Descripción</div>
         <div className="text-right">Tamaño</div>
         <div className="text-right">Acciones</div>
       </div>
@@ -56,11 +57,12 @@ const FileTable = ({ files, onFileContextMenu }) => {
         <div
           key={index}
           onContextMenu={(e) => onFileContextMenu(e, file)}
-          className="grid grid-cols-5 gap-4 py-2 items-center px-2 hover:bg-gray-100 rounded text-sm text-gray-800"
+          className="grid grid-cols-6 gap-4 py-2 items-center px-2 hover:bg-gray-100 rounded text-sm text-gray-800"
         >
           <div className="flex items-center gap-2">📄 {file.name}</div>
           <div>{file.owner}</div>
           <div>{file.date}</div>
+          <div>{file.description || '-'}</div>
           <div className="text-right">{file.size}</div>
           <div className="text-right text-gray-400 italic">Clic derecho</div>
         </div>
@@ -84,12 +86,12 @@ const FileExplorer = () => {
     children: [
       {
         name: 'Contratos',
-        files: [{ name: 'Contrato1.pdf', owner: 'yo', date: '10 jul 2024', size: '312 KB' }],
+        files: [{ name: 'Contrato1.pdf', owner: 'yo', date: '10 jul 2024', size: '312 KB', description: 'Contrato anual' }],
         children: [],
       },
       {
         name: 'Documentos',
-        files: [{ name: 'Oficio.docx', owner: 'yo', date: '20 may 2024', size: '180 KB' }],
+        files: [{ name: 'Oficio.docx', owner: 'yo', date: '20 may 2024', size: '180 KB', description: 'Oficio enviado a cliente' }],
         children: [],
       },
     ],
@@ -98,6 +100,9 @@ const FileExplorer = () => {
   const [selectedPath, setSelectedPath] = useState([]);
   const [contextMenu, setContextMenu] = useState({ visible: false, x: 0, y: 0, file: null });
   const [folderContextMenu, setFolderContextMenu] = useState({ visible: false, x: 0, y: 0, path: null });
+  const [pendingFiles, setPendingFiles] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [description, setDescription] = useState('');
 
   const createFolder = () => {
     const folderName = prompt('Nombre de la nueva carpeta:');
@@ -125,40 +130,36 @@ const FileExplorer = () => {
   const handleFileUpload = (event) => {
     const files = Array.from(event.target.files);
     if (!files.length) return;
-
-    const updatedStructure = structuredClone(structure);
-    const targetFolder = getFolderByPath(updatedStructure, selectedPath);
-
-    files.forEach(file => {
-      targetFolder.files.push({
-        name: file.name,
-        owner: 'yo',
-        date: new Date().toLocaleDateString(),
-        size: (file.size / 1024).toFixed(1) + ' KB',
-      });
-    });
-
-    setStructure(updatedStructure);
+    setPendingFiles(files);
+    setShowModal(true);
   };
 
   const handleDrop = (e) => {
     e.preventDefault();
     const droppedFiles = Array.from(e.dataTransfer.files);
     if (!droppedFiles.length) return;
+    setPendingFiles(droppedFiles);
+    setShowModal(true);
+  };
 
+  const confirmUpload = () => {
     const updatedStructure = structuredClone(structure);
     const targetFolder = getFolderByPath(updatedStructure, selectedPath);
 
-    droppedFiles.forEach(file => {
+    pendingFiles.forEach(file => {
       targetFolder.files.push({
         name: file.name,
         owner: 'yo',
         date: new Date().toLocaleDateString(),
         size: (file.size / 1024).toFixed(1) + ' KB',
+        description: description || '',
       });
     });
 
     setStructure(updatedStructure);
+    setPendingFiles([]);
+    setDescription('');
+    setShowModal(false);
   };
 
   const handleClick = () => {
@@ -288,7 +289,6 @@ const FileExplorer = () => {
         </div>
       )}
 
-
       {/* Menú contextual carpetas */}
       {folderContextMenu.visible && (
         <div
@@ -306,6 +306,41 @@ const FileExplorer = () => {
         </div>
       )}
 
+      {/* Modal de descripción */}
+      {showModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-30 flex justify-center items-center z-50">
+          <div className="bg-white p-6 rounded-xl shadow-lg w-full max-w-md">
+            <h2 className="text-lg font-bold mb-4">Agregar descripción</h2>
+            <p className="mb-2">Archivos:</p>
+            <ul className="text-sm mb-4 list-disc list-inside text-gray-600">
+              {pendingFiles.map((file, idx) => (
+                <li key={idx}>{file.name}</li>
+              ))}
+            </ul>
+            <textarea
+              className="w-full border border-gray-300 rounded p-2 mb-4 resize-none"
+              placeholder="Descripción del archivo..."
+              rows={3}
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            />
+            <div className="flex justify-end gap-2">
+              <button
+                onClick={() => { setShowModal(false); setPendingFiles([]); setDescription(''); }}
+                className="px-4 py-1 bg-gray-300 rounded hover:bg-gray-400"
+              >
+                Cancelar
+              </button>
+              <button
+                onClick={confirmUpload}
+                className="px-4 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
+              >
+                Subir
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

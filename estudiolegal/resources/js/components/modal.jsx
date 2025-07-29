@@ -1,20 +1,22 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 
 const Modal = ({ isOpen, onClose, children }) => {
   if (!isOpen) return null;
 
-  return (
-    <div 
-      className="fixed inset-0 bg-gray-200 bg-opacity-40 flex items-center justify-center z-50"
+  return ReactDOM.createPortal(
+    <div
+      className="fixed inset-0 bg-black bg-opacity-40 backdrop-blur-sm flex items-center justify-center z-[9999]"
       onClick={onClose}
     >
-      <div 
+      <div
         className="bg-white p-6 rounded-xl shadow-lg w-full max-w-lg"
-        onClick={(e) => e.stopPropagation()} 
+        onClick={(e) => e.stopPropagation()}
       >
         {children}
       </div>
-    </div>
+    </div>,
+    document.body
   );
 };
 

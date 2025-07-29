@@ -25,6 +25,17 @@ function Sidebar() {
         >
           Ver Carpetas
         </NavLink>
+
+        <NavLink
+          to="/asignar"
+          className={({ isActive }) =>
+            `block py-4 rounded-xl px-2 hover:cursor-pointer ${isActive ? 'bg-blue-400 text-white' : 'hover:bg-blue-300 hover:text-white'
+            }`
+          }
+        >
+          Asignar Roles
+        </NavLink>
+
       </div>
     </div>
   );

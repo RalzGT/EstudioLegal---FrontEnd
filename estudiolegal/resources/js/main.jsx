@@ -23,8 +23,9 @@ function Main() {
         </div>
         <div className="col-span-4 row-span-1 row-start-2 p-4 overflow-y-auto max-h-[calc(100vh-60px)]">
           <Routes>
-            <Route path="/" element={<Asignar />} />
+            <Route path="/" element={<Dashboard />} />
             <Route path="/carpetas" element={<Carpetas />} />
+            <Route path="/asignar" element={<Asignar />} />
           </Routes>
         </div>
       </div>
