@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
-const Folder = ({ folder, path, onSelect, selectedPath, onFolderContextMenu }) => {
-  const [isOpen, setIsOpen] = useState(path.length === 0);
+const Folder = ({ folder, path, onSelect, selectedPath, onFolderContextMenu, searchTerm, matchesSearch }) => {
+  const [isOpen, setIsOpen] = useState(path.length === 0 || matchesSearch); 
 
   const handleClick = () => {
     setIsOpen(!isOpen);
@@ -13,6 +13,28 @@ const Folder = ({ folder, path, onSelect, selectedPath, onFolderContextMenu }) =
     onFolderContextMenu(e, path, folder.name);
   };
 
+
+  const folderMatches = (folder, searchTerm) => {
+    if (!searchTerm) return true;
+    
+    if (folder.name.toLowerCase().includes(searchTerm.toLowerCase())) {
+      return true;
+    }
+    
+    if (folder.children && folder.children.length > 0) {
+      return folder.children.some(child => folderMatches(child, searchTerm));
+    }
+    
+    return false;
+  };
+
+  const currentMatches = folderMatches(folder, searchTerm);
+  const nameMatches = searchTerm && folder.name.toLowerCase().includes(searchTerm.toLowerCase());
+
+  if (searchTerm && !currentMatches) {
+    return null;
+  }
+
   return (
     <div className="ml-4">
       <div
@@ -21,9 +43,9 @@ const Folder = ({ folder, path, onSelect, selectedPath, onFolderContextMenu }) =
         className={`cursor-pointer py-1 px-2 rounded ${selectedPath.join(',') === path.join(',')
           ? 'bg-blue-200 text-blue-900 font-semibold'
           : 'text-blue-700 hover:bg-blue-100'
-          }`}
+          } ${nameMatches ? 'bg-yellow-100 border border-yellow-300' : ''}`}
       >
-        📁 {folder.name}
+        📁 <span className={nameMatches ? 'bg-yellow-200 px-1 rounded' : ''}>{folder.name}</span>
       </div>
 
       {isOpen &&
@@ -36,37 +58,72 @@ const Folder = ({ folder, path, onSelect, selectedPath, onFolderContextMenu }) =
             onSelect={onSelect}
             selectedPath={selectedPath}
             onFolderContextMenu={onFolderContextMenu}
+            searchTerm={searchTerm}
+            matchesSearch={matchesSearch}
           />
         ))}
     </div>
   );
 };
 
-const FileTable = ({ files, onFileContextMenu }) => {
+const FileTable = ({ files, onFileContextMenu, searchTerm }) => {
+  const filteredFiles = files.filter(file => {
+    if (!searchTerm) return true;
+    return file.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+           (file.description && file.description.toLowerCase().includes(searchTerm.toLowerCase()));
+  });
+
   return (
     <div className="overflow-y-auto w-full max-h-[80vh]">
-      <div className="grid grid-cols-6 gap-4 text-sm text-gray-400 font-semibold border-b py-2 px-2">
-        <div>Nombre</div>
-        <div>Propietario</div>
-        <div>Fecha</div>
-        <div>Descripción</div>
-        <div className="text-right">Tamaño</div>
-        <div className="text-right">Acciones</div>
-      </div>
-      {files.map((file, index) => (
-        <div
-          key={index}
-          onContextMenu={(e) => onFileContextMenu(e, file)}
-          className="grid grid-cols-6 gap-4 py-2 items-center px-2 hover:bg-gray-100 rounded text-sm text-gray-800"
-        >
-          <div className="flex items-center gap-2">📄 {file.name}</div>
-          <div>{file.owner}</div>
-          <div>{file.date}</div>
-          <div>{file.description || '-'}</div>
-          <div className="text-right">{file.size}</div>
-          <div className="text-right text-gray-400 italic">Clic derecho</div>
-        </div>
-      ))}
+      <table className="w-full table-auto border-collapse">
+        <thead>
+          <tr className="text-sm text-gray-400 font-semibold border-b">
+            <th className="text-left py-2 px-2">Nombre</th>
+            <th className="text-left py-2 px-2">Propietario</th>
+            <th className="text-left py-2 px-2">Fecha</th>
+            <th className="text-left py-2 px-2">Descripción</th>
+            <th className="text-right py-2 px-2">Tamaño</th>
+            <th className="text-right py-2 px-2">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {filteredFiles.length === 0 ? (
+            <tr>
+              <td colSpan="6" className="py-8 text-center text-gray-500">
+                {searchTerm ? 'No se encontraron archivos que coincidan con la búsqueda' : 'No hay archivos en esta carpeta'}
+              </td>
+            </tr>
+          ) : (
+            filteredFiles.map((file, index) => {
+              const nameMatches = searchTerm && file.name.toLowerCase().includes(searchTerm.toLowerCase());
+              const descriptionMatches = searchTerm && file.description && file.description.toLowerCase().includes(searchTerm.toLowerCase());
+              
+              return (
+                <tr
+                  key={index}
+                  onContextMenu={(e) => onFileContextMenu(e, file)}
+                  className={`hover:bg-gray-100 text-sm text-gray-800 ${
+                    (nameMatches || descriptionMatches) ? 'bg-yellow-50 border-l-4 border-yellow-300' : ''
+                  }`}
+                >
+                  <td className="py-2 px-2 align-top">
+                    <div className="flex items-center gap-2">
+                      📄 <span className={`${nameMatches ? 'bg-yellow-200 px-1 rounded' : ''}`}>{file.name}</span>
+                    </div>
+                  </td>
+                  <td className="py-2 px-2 align-top whitespace-nowrap">{file.owner}</td>
+                  <td className="py-2 px-2 align-top whitespace-nowrap">{file.date}</td>
+                  <td className={`py-2 px-2 align-top ${descriptionMatches ? 'bg-yellow-200 px-1 rounded' : ''}`}>
+                    {file.description || '-'}
+                  </td>
+                  <td className="py-2 px-2 align-top text-right whitespace-nowrap">{file.size}</td>
+                  <td className="py-2 px-2 align-top text-right text-gray-400 italic whitespace-nowrap">Clic derecho</td>
+                </tr>
+              );
+            })
+          )}
+        </tbody>
+      </table>
     </div>
   );
 };
@@ -77,6 +134,16 @@ const getFolderByPath = (root, path) => {
     current = current.children[index];
   }
   return current;
+};
+
+const formatFileSize = (bytes) => {
+  if (bytes === 0) return '0 Bytes';
+  
+  const k = 1024;
+  const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+  
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
 };
 
 const FileExplorer = () => {
@@ -103,6 +170,8 @@ const FileExplorer = () => {
   const [pendingFiles, setPendingFiles] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [description, setDescription] = useState('');
+  const [folderSearchTerm, setFolderSearchTerm] = useState('');
+  const [fileSearchTerm, setFileSearchTerm] = useState('');
 
   const createFolder = () => {
     const folderName = prompt('Nombre de la nueva carpeta:');
@@ -151,7 +220,7 @@ const FileExplorer = () => {
         name: file.name,
         owner: 'yo',
         date: new Date().toLocaleDateString(),
-        size: (file.size / 1024).toFixed(1) + ' KB',
+        size: formatFileSize(file.size),
         description: description || '',
       });
     });
@@ -229,6 +298,18 @@ const FileExplorer = () => {
     <div onClick={handleClick} className="relative">
       <div className="h-screen w-full flex bg-white text-gray-800 font-sans">
         <div className="w-1/4 p-4 border-r border-gray-300 overflow-y-auto max-h-screen">
+          <form onSubmit={(e) => e.preventDefault()}>
+            <input 
+              type="text" 
+              name="folderSearch" 
+              id="folderSearch" 
+              className='border border-gray-200 shadow-sm mb-2 w-full p-1 rounded' 
+              value={folderSearchTerm}
+              onChange={(e) => setFolderSearchTerm(e.target.value)}
+              placeholder="Escribir nombre de carpeta..."
+            />
+          </form>
+          <hr className='text-gray-400' />
           <h2 className="text-lg font-bold mb-4">Carpetas</h2>
           <Folder
             folder={structure}
@@ -236,6 +317,8 @@ const FileExplorer = () => {
             onSelect={setSelectedPath}
             selectedPath={selectedPath}
             onFolderContextMenu={handleFolderContextMenu}
+            searchTerm={folderSearchTerm}
+            matchesSearch={folderSearchTerm !== ''}
           />
         </div>
 
@@ -247,6 +330,18 @@ const FileExplorer = () => {
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-2xl font-bold">{getFolderName()}</h2>
             <div className="flex items-center">
+              <form onSubmit={(e) => e.preventDefault()}>
+                <label htmlFor="fileSearch">Buscar archivo: </label>
+                <input 
+                  type="text" 
+                  name="fileSearch" 
+                  id="fileSearch" 
+                  className='border border-gray-200 shadow-sm mr-2 p-1 rounded' 
+                  value={fileSearchTerm}
+                  onChange={(e) => setFileSearchTerm(e.target.value)}
+                  placeholder="Buscar por nombre o descripción..."
+                />
+              </form>
               <button
                 className="bg-blue-600 text-white px-4 py-1 rounded hover:cursor-pointer hover:bg-blue-700"
                 onClick={createFolder}
@@ -268,7 +363,11 @@ const FileExplorer = () => {
             </div>
           </div>
 
-          <FileTable files={getFilesFromSelected()} onFileContextMenu={handleFileContextMenu} />
+          <FileTable 
+            files={getFilesFromSelected()} 
+            onFileContextMenu={handleFileContextMenu} 
+            searchTerm={fileSearchTerm}
+          />
         </div>
       </div>
 
