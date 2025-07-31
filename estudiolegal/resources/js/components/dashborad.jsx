@@ -12,7 +12,7 @@ function Dashboard() {
             <div className='flex flex-col col-span-4 row-span-6 bg-white rounded shadow-lg h-full w-full p-4'>
                 <div className='font-bold text-gray-800 text-3xl'>Bienvenido Abogado</div>
                 <div className='mt-6'><GraficoCrecimiento /></div>
-                <div className='flex items-center justify-center font-semibold'>Crecimiento en los ultimos 3 meses</div>
+                <div className='flex items-center justify-center font-semibold'>Cantidad archivos en los ultimos 3 meses</div>
             </div>
             <div className='flex items-center justify-center row-span-2 col-start-5 bg-white rounded shadow-lg h-full w-full'>
                 <div className='flex text-center items-center justify-center'><GraficoEspacio /></div>
