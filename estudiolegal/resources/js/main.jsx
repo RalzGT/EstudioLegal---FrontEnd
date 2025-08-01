@@ -9,6 +9,7 @@ import Dashboard from "./components/dashborad";
 import Carpetas from "./components/carpetas";
 import Login from "./components/login";
 import Asignar from "./components/asignar";
+import Desbanear from "./components/desbanear";
 
 
 function Main() {
@@ -26,6 +27,7 @@ function Main() {
             <Route path="/" element={<Dashboard />} />
             <Route path="/carpetas" element={<Carpetas />} />
             <Route path="/asignar" element={<Asignar />} />
+            <Route path="/desbanear" element={<Desbanear />} />
           </Routes>
         </div>
       </div>

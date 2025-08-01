@@ -12,10 +12,12 @@ function Dashboard() {
             <div className='flex flex-col col-span-4 row-span-6 bg-white rounded shadow-lg h-full w-full p-4'>
                 <div className='font-bold text-gray-800 text-3xl'>Bienvenido Abogado</div>
                 <div className='mt-6'><GraficoCrecimiento /></div>
-                <div className='flex items-center justify-center font-semibold'>Cantidad archivos en los ultimos 3 meses</div>
             </div>
-            <div className='flex items-center justify-center row-span-2 col-start-5 bg-white rounded shadow-lg h-full w-full'>
-                <div className='flex text-center items-center justify-center'><GraficoEspacio /></div>
+            <div className='flex flex-col items-center justify-center row-span-2 col-start-5 row-start-1 bg-white rounded shadow-lg h-full w-full'>
+                <div className='font-semibold text-l'>Documentos Actuales</div>
+                <div>
+                    <h2 className='text-lg'>25</h2>
+                </div>
             </div>
             <>
                 <div
@@ -36,11 +38,9 @@ function Dashboard() {
                     </button>
                 </Modal>
             </>
-            <div className='flex flex-col items-center justify-center row-span-2 col-start-5 row-start-5 bg-white rounded shadow-lg h-full w-full'>
-                <div className='font-semibold text-l'>Documentos Actuales</div>
-                <div>
-                    <h2 className='text-lg'>25</h2>
-                </div>
+            <div className='flex flex-col items-center justify-center text-center row-span-2 col-start-5 row-start-5 bg-white rounded shadow-lg h-full w-full'>
+                <div className='font-semibold text-l'>Espacio para Opcion o Contenido</div>
+                <span>O simplemente se borra.</span>
             </div>
         </div>
     )

@@ -23,7 +23,7 @@ function Sidebar() {
             }`
           }
         >
-          Ver Carpetas
+          Carpetas
         </NavLink>
 
         <NavLink
@@ -33,7 +33,16 @@ function Sidebar() {
             }`
           }
         >
-          Asignar Roles
+          Control Usuario
+        </NavLink>
+        <NavLink
+          to="/desbanear"
+          className={({ isActive }) =>
+            `block py-4 rounded-xl px-2 hover:cursor-pointer ${isActive ? 'bg-blue-400 text-white' : 'hover:bg-blue-300 hover:text-white'
+            }`
+          }
+        >
+          Re-asignar Usuario
         </NavLink>
 
       </div>

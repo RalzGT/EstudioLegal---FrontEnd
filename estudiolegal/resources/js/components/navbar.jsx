@@ -40,7 +40,7 @@ function Navbar() {
             <a
               className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
             >
-              abogato12@gmail.com
+              abogado12@gmail.com
             </a>
             <a
               href="/"

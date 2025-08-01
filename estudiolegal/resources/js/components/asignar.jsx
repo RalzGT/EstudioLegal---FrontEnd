@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 
 function Asignar() {
-  // Datos aleatorios de ejemplo
   const [array] = useState([
     {
       nombre: "María González",
@@ -64,9 +63,9 @@ function Asignar() {
                 <button className='border rounded border-white p-1 hover:bg-white hover:text-blue-500 hover:scale-110 hover:cursor-pointer font-bold'>Registrar Empleado</button>
               </div>
               <div className="relative">
-                <input 
-                  type="text" 
-                  placeholder="Buscar por nombre..." 
+                <input
+                  type="text"
+                  placeholder="Buscar por nombre..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   className="px-4 py-2 rounded-lg text-gray-900 bg-white border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:border-transparent"
@@ -120,11 +119,10 @@ function Asignar() {
                     <td className="border border-gray-300 px-4 py-3 text-gray-900 text-center">{element.telefono}</td>
                     <td className="border border-gray-300 px-4 py-3">
                       <div className="flex justify-center items-center text-center">
-                        <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                          element.rol.includes('Abogado') ? 'bg-purple-100 text-purple-800' :
-                          element.rol.includes('Asistente') ? 'bg-blue-100 text-blue-800' :
-                          'bg-gray-100 text-gray-800'
-                        }`}>
+                        <span className={`px-2 py-1 rounded-full text-xs font-medium ${element.rol.includes('Abogado') ? 'bg-purple-100 text-purple-800' :
+                            element.rol.includes('Asistente') ? 'bg-blue-100 text-blue-800' :
+                              'bg-gray-100 text-gray-800'
+                          }`}>
                           {element.rol}
                         </span>
                       </div>
@@ -146,7 +144,7 @@ function Asignar() {
             </tbody>
           </table>
         </div>
-      </div>  
+      </div>
     </div>
   );
 }
