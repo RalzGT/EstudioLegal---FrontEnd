@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom/client';
-import GraficoEspacio from './graficoespacio';
 import GraficoCrecimiento from './graficocrecimiento'
 import Modal from './modal';
 
