@@ -146,9 +146,9 @@ const formatFileSize = (bytes) => {
   return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
 };
 
-const FileExplorer = () => {
+const FileExplorer3 = () => {
   const [structure, setStructure] = useState({
-    name: 'Sin Finalizar',
+    name: 'Jurisprudencia',
     files: [],
     children: [
       {
@@ -443,4 +443,4 @@ const FileExplorer = () => {
   );
 };
 
-export default FileExplorer;
+export default FileExplorer3;

@@ -23,7 +23,27 @@ function Sidebar() {
             }`
           }
         >
-          Carpetas
+          Casos Pendientes
+        </NavLink>
+
+        <NavLink
+          to="/casosterminados"
+          className={({ isActive }) =>
+            `block py-4 rounded-xl px-2 hover:cursor-pointer ${isActive ? 'bg-blue-400 text-white' : 'hover:bg-blue-300 hover:text-white'
+            }`
+          }
+        >
+          Casos Finalizados
+        </NavLink>
+        
+        <NavLink
+          to="/jurisprudencia"
+          className={({ isActive }) =>
+            `block py-4 rounded-xl px-2 hover:cursor-pointer ${isActive ? 'bg-blue-400 text-white' : 'hover:bg-blue-300 hover:text-white'
+            }`
+          }
+        >
+          Jurisprudencia
         </NavLink>
 
         <NavLink

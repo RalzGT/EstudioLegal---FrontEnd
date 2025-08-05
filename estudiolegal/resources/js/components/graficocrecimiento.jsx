@@ -2,14 +2,14 @@ import React from 'react';
 
 const GraficoCrecimiento = () => {
   // Datos de ejemplo para el espacio
-  const espacioUsado = 85; // 75GB usados
-  const espacioTotal = 100; // 100GB totales
+  const espacioUsado = 20;
+  const espacioTotal = 100;
   const porcentajeUsado = Math.round((espacioUsado / espacioTotal) * 100);
   
-  // Calcular el ángulo para el gauge (180 grados para semicírculo)
+  // Calcular el angulo para el gauge
   const angulo = (porcentajeUsado / 100) * 180;
   
-  // Determinar color según el porcentaje usado
+  // Determinar color segun el porcentaje usado
   const getColor = (percentage) => {
     if (percentage < 50) return '#10B981'; // Verde
     if (percentage < 80) return '#F59E0B'; // Amarillo

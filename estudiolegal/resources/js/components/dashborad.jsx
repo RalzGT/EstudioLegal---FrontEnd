@@ -24,11 +24,11 @@ function Dashboard() {
                     onClick={() => setModalOpen(true)}
                     className='flex items-center justify-center row-span-2 col-start-5 row-start-3 hover:bg-blue-200 hover:scale-110 hover:shadow-xl hover:border hover:border-white hover:cursor-pointer bg-white rounded shadow-lg h-full w-full'
                 >
-                    Último Documento
+                    Ultimos Movimientos
                 </div>
 
                 <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)}>
-                    <h2 className="text-2xl font-bold mb-4">Último Documento</h2>
+                    <h2 className="text-2xl font-bold mb-4">Movimientos en archivos</h2>
                     <p className="mb-4">Contenido del documento o lo que quieras mostrar.</p>
                     <button
                         onClick={() => setModalOpen(false)}

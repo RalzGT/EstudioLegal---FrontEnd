@@ -10,10 +10,13 @@ import Carpetas from "./components/carpetas";
 import Login from "./components/login";
 import Asignar from "./components/asignar";
 import Desbanear from "./components/desbanear";
+import Casosterminados from "./components/casosterminados";
+import Jurisprudencia from "./components/jurisprudencia";
 
 
 function Main() {
   return (
+    // <Login />
     <BrowserRouter>
       <div className="bg-gray-300 w-full h-screen grid grid-cols-5 grid-rows-[auto_1fr]">
         <div className="col-span-5 h-[60px] border-b border-gray-300 shadow-md">
@@ -26,6 +29,8 @@ function Main() {
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/carpetas" element={<Carpetas />} />
+            <Route path="/casosterminados" element={<Casosterminados />} />
+            <Route path="/jurisprudencia" element={<Jurisprudencia />} />
             <Route path="/asignar" element={<Asignar />} />
             <Route path="/desbanear" element={<Desbanear />} />
           </Routes>
